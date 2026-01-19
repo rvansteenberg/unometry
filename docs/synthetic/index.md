@@ -1,4 +1,0 @@
----
-title: Synthetic
-draft: false
----

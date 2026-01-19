@@ -1,4 +1,0 @@
----
-title: Noetic
-draft: false
----

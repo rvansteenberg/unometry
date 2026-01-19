@@ -1,4 +1,0 @@
----
-title: Wikilink
-draft: false
----
