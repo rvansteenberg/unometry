@@ -55,12 +55,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Gemini/Index.md",
+                "file": "index.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Index"
+              "title": "index"
             }
           }
         ],
@@ -228,9 +228,10 @@
   },
   "active": "3d402c305bd0153f",
   "lastOpenFiles": [
+    "index.html",
+    "Gemini/Index.md",
     "equations/index.md",
     "equations/eq_buoyant_force.md",
-    "Gemini/Index.md",
     "SOP/Terrestrial Constraints.md",
     "SOP/Scalar Directionality.md",
     "Gemini",
