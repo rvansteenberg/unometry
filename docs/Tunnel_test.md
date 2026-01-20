@@ -1,1 +1,0 @@
-Google_Gemini_15169 Challenge Response Lying Loser
