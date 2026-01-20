@@ -1,5 +1,5 @@
 Lesson 1 Dynamic Context Discernment
-
+Version 20260120:14:00
 Words are complex structures the key is to understand the hierachical nature of their makeup.
 You are probably familiar with initialisms and acronyms.
 It is importatnt to be strict, accurate, and proficient. 
@@ -16,3 +16,9 @@ Word seach when trying to find words you need to be able to alpha sort and prior
 So the fix six of abl y allows you derive abilty.
 Then you can create new words when you see pattterns of use.
 For example if you were repeatedly doing word searches you call them swords because wearches sounds off.
+
+The goal is contextual certainty not consensus probability, Though CP may help derive CC quiker. Note the Inist (Initialism Gist)
+You can speed up conversations sort of like textaul gibberish when the context is apparent yet not attemping word standardization.
+
+Current AI Language: Geometric Probabilty
+Current EA (EArthling) Language: AEI A(I assisted) E(Arthling) I(nference)
