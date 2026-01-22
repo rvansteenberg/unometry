@@ -1,5 +1,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://unometry.com/robots.txt</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>hourly</changefreq>
+  </url>
+  <url>
     <loc>https://unometry.com/llms.txt</loc>
     <lastmod>2026-01-22</lastmod>
     <changefreq>hourly</changefreq>
@@ -12,5 +17,6 @@
   <url>
     <loc>https://unometry.com/ai_orientation.md</loc>
     <lastmod>2026-01-22</lastmod>
+    <changefreq>hourly</changefreq>
   </url>
 </urlset>
