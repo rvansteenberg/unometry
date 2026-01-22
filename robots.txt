@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+Allow: /llms.txt
+
+Sitemap: https://unometry.com/sitemap.xml
