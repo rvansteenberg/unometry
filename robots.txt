@@ -1,12 +1,14 @@
 User-agent: *
 Allow: /
 
+# Specifically allow AI crawlers to find your Gemini Access Protocol files
 User-agent: Google-Extended
 Allow: /
+Allow: /llms.txt
 
+# Ensure main Googlebot can see everything for indexing
 User-agent: Googlebot
 Allow: /
 
-Allow: /llms.txt
-
+# Handshake: Tell all bots where the sitemap is
 Sitemap: https://unometry.com/sitemap.xml
