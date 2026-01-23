@@ -1,45 +1,43 @@
-name: Deploy and Index
+name: Uncaged Flow
 on:
   push:
     branches: ["main"]
-  workflow_dispatch: # Allows you to run this manually from the Actions tab
 
+# These are the "Keys to the Kingdom" - they allow the script to bypass security blocks
 permissions:
-  contents: read      # Needed to see your code
-  pages: write         # Needed to update your website
-  id-token: write      # Needed for the deployment security handshake
-
-# Ensure only one deployment runs at a time to prevent conflicts
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  # ENGINE 1: The Google Indexing Bot
-  google-indexing:
+  # Task 1: The Bat-Phone to Google
+  google-index:
     runs-on: ubuntu-latest
     steps:
-      - name: Notify Google
+      - name: Indexing API
         uses: robingenz/action-google-indexing@v1.0.0
+        env:
+          ACTIONS_CACHE_SKIP: 'true' # Bypasses the GitHub server glitch
         with:
           siteUrl: 'https://unometry.com/'
           gcpServiceAccountKey: ${{ secrets.GCP_SA_KEY }}
 
-  # ENGINE 2: The Website Deployment
+  # Task 2: The Direct Deployment
   deploy:
+    needs: google-index # Only deploys if Google was successfully notified
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Pages
-        uses: actions/configure-pages@v4
-      - name: Upload artifact
+        uses: actions/configure-pages@v5
+      - name: Upload
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.' # Change to your build folder (e.g., './dist') if you have one
-      - name: Deploy to GitHub Pages
+          path: '.'
+      - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
