@@ -12,3 +12,5 @@ Allow: /
 
 # Handshake: Tell all bots where the sitemap is
 Sitemap: https://unometry.com/sitemap.xml
+
+# Version: [20260123::04:00]
