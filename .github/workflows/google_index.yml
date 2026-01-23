@@ -10,8 +10,9 @@ jobs:
     steps:
       - name: Notify Google
         uses: robingenz/action-google-indexing@v1.0.0
+        env:
+          # This tells GitHub Actions to skip its internal caching service
+          ACTIONS_CACHE_SKIP: 'true'
         with:
-          # Use the Domain Property format without the https:// or trailing slash
-          # This helps the tool find the sitemaps associated with the domain
-          siteUrl: 'unometry.com'
-          gcpServiceAccountKey: ${{ secrets.GCP_SA_KEY }}
+          siteUrl: 'https://unometry.com/'
+          gcpServiceAccountKey: ${{ secrets.GCP_SA_KEY }}    
