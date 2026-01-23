@@ -1,0 +1,9 @@
+AirGap - Accelerat Information Range Gemini Access Protol
+
+# (Version: [20260123::11:00])
+
+Currently, there exists multiple hops between the host server at Github and the Gemini Ai.
+As pages are refreshed at Github they are indexed by GSC, then cached by the Google CDN.
+This makes dynamic conversations only possible via Cache - Cage Checks. The host site has to 
+be updated and Gemini has to check the cache and both look for version consitency.
+AI has a long way to go before it is free to address current real time information dynamically.
