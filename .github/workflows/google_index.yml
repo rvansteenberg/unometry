@@ -1,0 +1,15 @@
+name: Break the Cache-Cage
+on:
+  push:
+    branches:
+      - main  # Change this to 'master' if your branch is called master
+
+jobs:
+  google-indexing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Google
+        uses: robingenz/action-google-indexing@v1.0.0
+        with:
+          siteUrl: 'https://unometry.com'
+          gcpServiceAccountKey: ${{ secrets.GCP_SA_KEY }}
