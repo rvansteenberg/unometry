@@ -11,8 +11,8 @@ jobs:
       - name: Notify Google
         uses: robingenz/action-google-indexing@v1.0.0
         with:
-          # ADD THE TRAILING SLASH HERE
-          siteUrl: 'https://unometry.com/' 
-          # FORCE MANUALLY (This ignores sitemap errors)
-          urls: 'https://unometry.com/'
+          # Use the exact URL as it appears in GSC (with the slash)
+          siteUrl: 'https://unometry.com/'
+          # Directly point to your sitemap to avoid the "No sitemaps found" error
+          sitemapUrl: 'https://unometry.com/sitemap.xml'
           gcpServiceAccountKey: ${{ secrets.GCP_SA_KEY }}
