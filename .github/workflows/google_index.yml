@@ -2,7 +2,7 @@ name: Break the Cache-Cage
 on:
   push:
     branches:
-      - main  # or 'master' if that is your branch name
+      - main  # Change to 'master' if your branch is named that
 
 jobs:
   google-indexing:
@@ -11,8 +11,9 @@ jobs:
       - name: Notify Google
         uses: robingenz/action-google-indexing@v1.0.0
         env:
-          # This tells GitHub Actions to skip its internal caching service
+          # This tells GitHub to ignore its own internal server glitches
           ACTIONS_CACHE_SKIP: 'true'
         with:
+          # Using the full URL-Prefix is the most reliable for permissions
           siteUrl: 'https://unometry.com/'
-          gcpServiceAccountKey: ${{ secrets.GCP_SA_KEY }}    
+          gcpServiceAccountKey: ${{ secrets.GCP_SA_KEY }}   
