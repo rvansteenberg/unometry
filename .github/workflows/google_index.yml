@@ -2,29 +2,31 @@ name: Uncaged Flow
 on:
   push:
     branches: ["main"]
+  workflow_dispatch:
 
-# These are the "Keys to the Kingdom" - they allow the script to bypass security blocks
 permissions:
   contents: read
   pages: write
   id-token: write
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 jobs:
-  # Task 1: The Bat-Phone to Google
   google-index:
     runs-on: ubuntu-latest
     steps:
       - name: Indexing API
         uses: robingenz/action-google-indexing@v1.0.0
         env:
-          ACTIONS_CACHE_SKIP: 'true' # Bypasses the GitHub server glitch
+          ACTIONS_CACHE_SKIP: 'true' # Bypasses the 400 cache error
         with:
           siteUrl: 'https://unometry.com/'
           gcpServiceAccountKey: ${{ secrets.GCP_SA_KEY }}
 
-  # Task 2: The Direct Deployment
   deploy:
-    needs: google-index # Only deploys if Google was successfully notified
+    needs: google-index
     runs-on: ubuntu-latest
     environment:
       name: github-pages
