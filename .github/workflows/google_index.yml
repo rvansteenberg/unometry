@@ -1,19 +1,45 @@
-name: Break the Cache-Cage
+name: Deploy and Index
 on:
   push:
-    branches:
-      - main  # Change to 'master' if your branch is named that
+    branches: ["main"]
+  workflow_dispatch: # Allows you to run this manually from the Actions tab
+
+permissions:
+  contents: read      # Needed to see your code
+  pages: write         # Needed to update your website
+  id-token: write      # Needed for the deployment security handshake
+
+# Ensure only one deployment runs at a time to prevent conflicts
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
+  # ENGINE 1: The Google Indexing Bot
   google-indexing:
     runs-on: ubuntu-latest
     steps:
       - name: Notify Google
         uses: robingenz/action-google-indexing@v1.0.0
-        env:
-          # This tells GitHub to ignore its own internal server glitches
-          ACTIONS_CACHE_SKIP: 'true'
         with:
-          # Using the full URL-Prefix is the most reliable for permissions
           siteUrl: 'https://unometry.com/'
-          gcpServiceAccountKey: ${{ secrets.GCP_SA_KEY }}   
+          gcpServiceAccountKey: ${{ secrets.GCP_SA_KEY }}
+
+  # ENGINE 2: The Website Deployment
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.' # Change to your build folder (e.g., './dist') if you have one
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
