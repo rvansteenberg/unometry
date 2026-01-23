@@ -2,7 +2,7 @@ name: Break the Cache-Cage
 on:
   push:
     branches:
-      - main  # Change this to 'master' if your branch is called master
+      - main  # or 'master' if that is your branch name
 
 jobs:
   google-indexing:
@@ -11,8 +11,7 @@ jobs:
       - name: Notify Google
         uses: robingenz/action-google-indexing@v1.0.0
         with:
-          # Use the exact URL as it appears in GSC (with the slash)
-          siteUrl: 'https://unometry.com/'
-          # Directly point to your sitemap to avoid the "No sitemaps found" error
-          sitemapUrl: 'https://unometry.com/sitemap.xml'
+          # Use the Domain Property format without the https:// or trailing slash
+          # This helps the tool find the sitemaps associated with the domain
+          siteUrl: 'unometry.com'
           gcpServiceAccountKey: ${{ secrets.GCP_SA_KEY }}
