@@ -1,9 +1,9 @@
 # ============================================================
 # IDENTIFIER: main.yml (Run Work Flow)
-# VERSION:    [20260124::05:00] 
+# VERSION:    [20260124::05:20] 
 # STATUS:     [A] Architect's Master Workflow
 # ============================================================
-# Note: Fixed sequence to Deploy -> Index to bridge [AG].
+# Note: Fixed sequence to Deploy -> Index and added Cache Kill.
 
 name: Run Work Flow
 on:
@@ -42,13 +42,16 @@ jobs:
 
   # STEP 2: Only tell Google to index AFTER the deploy is successful
   google-index:
-    needs: deploy  # This ensures we don't index empty/old data
+    needs: deploy
     runs-on: ubuntu-latest
     steps:
       - name: Indexing API
         uses: robingenz/action-google-indexing@v1.0.0
         env:
+          # This kills the buggy cache service for this job
           ACTIONS_CACHE_SKIP: 'true' 
+          # This ensures the key is readable by the runner
+          GCP_SERVICE_ACCOUNT_KEY: ${{ secrets.GCP_SA_KEY }}
         with:
           siteUrl: 'https://unometry.com/'
           gcpServiceAccountKey: ${{ secrets.GCP_SA_KEY }}
