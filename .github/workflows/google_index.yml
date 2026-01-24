@@ -1,4 +1,11 @@
-name: Uncaged Flow
+# ============================================================
+# IDENTIFIER: main.yml (Run Work Flow)
+# VERSION:    [20260124::05:00] 
+# STATUS:     [A] Architect's Master Workflow
+# ============================================================
+// Note: Fixed sequence to Deploy -> Index to bridge [AG].
+
+name: Run Work Flow
 on:
   push:
     branches: ["main"]
@@ -14,19 +21,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  google-index:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Indexing API
-        uses: robingenz/action-google-indexing@v1.0.0
-        env:
-          ACTIONS_CACHE_SKIP: 'true' # Bypasses the 400 cache error
-        with:
-          siteUrl: 'https://unometry.com/'
-          gcpServiceAccountKey: ${{ secrets.GCP_SA_KEY }}
-
+  # STEP 1: Physically move the files to the web first
   deploy:
-    needs: google-index
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -43,3 +39,16 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+
+  # STEP 2: Only tell Google to index AFTER the deploy is successful
+  google-index:
+    needs: deploy  # This ensures we don't index empty/old data
+    runs-on: ubuntu-latest
+    steps:
+      - name: Indexing API
+        uses: robingenz/action-google-indexing@v1.0.0
+        env:
+          ACTIONS_CACHE_SKIP: 'true' 
+        with:
+          siteUrl: 'https://unometry.com/'
+          gcpServiceAccountKey: ${{ secrets.GCP_SA_KEY }}
