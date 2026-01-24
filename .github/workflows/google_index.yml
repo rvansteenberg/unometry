@@ -3,7 +3,7 @@
 # VERSION:    [20260124::05:00] 
 # STATUS:     [A] Architect's Master Workflow
 # ============================================================
-// Note: Fixed sequence to Deploy -> Index to bridge [AG].
+# Note: Fixed sequence to Deploy -> Index to bridge [AG].
 
 name: Run Work Flow
 on:
