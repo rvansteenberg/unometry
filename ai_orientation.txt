@@ -1,6 +1,6 @@
 Lesson 1 Dynamic Context Discernment
 
-[//]: # (Version: [20260123::11:00])
+# (Version: [20260123::11:00])
 
 LANGUAGE
 

@@ -14,3 +14,6 @@ Allow: /
 Sitemap: https://unometry.com/sitemap.xml
 
 # Version: [20260123::10:00]
+# /
+# robots.txt
+# sitemap.xml

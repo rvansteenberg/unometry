@@ -2,26 +2,23 @@
   <url>
     <loc>https://unometry.com/</loc>
     <lastmod>2026-01-23</lastmod>
-    <changefreq>hourly</changefreq>
+    <priority>1.0</priority>
+    <changefreq>daily</changefreq>
   </url>
   <url>
     <loc>https://unometry.com/llms.txt</loc>
     <lastmod>2026-01-23</lastmod>
-    <changefreq>hourly</changefreq>
+    <priority>1.0</priority>
+    <changefreq>daily</changefreq>
   </url>
   <url>
-    <loc>https://unometry.com/ai_orientation.md</loc>
+    <loc>https://unometry.com/ai_orientation.txt</loc>
     <lastmod>2026-01-23</lastmod>
-    <changefreq>hourly</changefreq>
+    <changefreq>daily</changefreq>
   </url>
   <url>
-    <loc>https://unometry.com/ai_airgap.md</loc>
+    <loc>https://unometry.com/ai_airgap.txt</loc>
     <lastmod>2026-01-23</lastmod>
-    <changefreq>hourly</changefreq>
-  </url>
-  <url>
-    <loc>https://unometry.com/ai_airgap.md</loc>
-    <lastmod>2026-01-23</lastmod>
-    <changefreq>hourly</changefreq>
+    <changefreq>daily</changefreq>
   </url>
 </urlset>
