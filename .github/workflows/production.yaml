@@ -2,7 +2,6 @@ name: Production Master Workflow
 on:
   push:
     branches: ["main"]
-  workflow_dispatch:
 
 jobs:
   firebase-deploy:
@@ -15,8 +14,7 @@ jobs:
         run: npm install -g firebase-tools
 
       - name: Deploy to Firebase
-        # This uses the service account key directly to bypass the faulty plugin
         run: |
-          export GOOGLE_APPLICATION_CREDENTIALS=service-account.json
           echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_UNOMETRY_INDEXING_BRIDGE }}' > service-account.json
+          export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/service-account.json
           firebase deploy --only hosting --project unometry-indexing-bridge --non-interactive
