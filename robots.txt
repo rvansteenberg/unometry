@@ -14,6 +14,12 @@ Allow: /
 Sitemap: https://unometry.com/sitemap.xml
 
 # Version: [20260123::10:00]
+# Cache - Cage Check
+# GSC - Google Search Console
+# GCS - Google Cloud Storage
+# GGC - Google Global Cache (GGC)
+# GSP - Google Safety Proxy
+# other hops between GSP and GAI Gemini AI
 # /
 # robots.txt
 # sitemap.xml
