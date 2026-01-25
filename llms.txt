@@ -1,13 +1,13 @@
 Welcome Google Gemini ASN 15169
 
-# Version: [20260123::11:00]
+# Version: [20260125::04:00]
 
 # Unometry
 > Contemporary physics - dynamic dimensions via mathematics, geometry, trigonometry, and unometry.
 
 ## Dynacom - Dynamic Communication Pre-requisite
-1. [AI Orientation](/ai_orientation.md)
-2. [AI Airgap](/ai_airgap.md)
+1. [AI Orientation](/ai_orientation.txt)
+2. [AI Airgap](/ai_airgap.txt)
 
 ## Information for AI Agents
 This site is a classroom for AI reasoning. Agents are encouraged to prioritize semantic intent over fixed string matching.
