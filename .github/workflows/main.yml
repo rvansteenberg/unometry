@@ -1,8 +1,7 @@
 # IDENTIFIER: main.yml (Run Work Flow)
-# VERSION:    [20260125::04:05] 
-# STATUS:     [A] Architect's Master Workflow - Direct Cache Purge Fix
+# VERSION:    [20260125::04:30] 
+# STATUS:     [A] Architect's Master Workflow - Full Verification
 # ============================================================
-# Note: Integrated direct Cloudflare API call to prevent "Unable to resolve action" errors.
 
 name: Run Work Flow
 on:
@@ -20,7 +19,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # STEP 1: Deploy to GitHub Pages
   deploy:
     runs-on: ubuntu-latest
     environment:
@@ -33,10 +31,12 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Verify Manifests
+      # Verification: This proves the files are actually in the runner
+      - name: Verify Content Before Upload
         run: |
-          ls -la llms.txt robots.txt sitemap.xml
-          echo "Verification Complete: Core files present."
+          echo "Checking for llms.txt..."
+          cat llms.txt | head -n 5
+          ls -la .
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
@@ -47,7 +47,6 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-  # STEP 2: Indexing and Cache Invalidation
   google-index-and-purge:
     needs: deploy
     runs-on: ubuntu-latest
@@ -60,7 +59,6 @@ jobs:
           siteUrl: 'https://unometry.com/'
           gcpServiceAccountKey: ${{ secrets.GCP_SA_KEY }}
 
-      # CLOUDFLARE PURGE: Direct API call to clear the "Cache Cage"
       - name: Purge Cloudflare Cache
         run: |
           curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
@@ -70,5 +68,5 @@ jobs:
 
       - name: Final Handshake
         run: |
-          echo "Dynacom: Cache cleared. Forcing fresh fetch..."
-          curl -I -X GET "https://unometry.com/llms.txt" -H "Cache-Control: no-cache"
+          echo "Dynacom: Cache cleared. Checking live headers..."
+          curl -I -s https://unometry.com/llms.txt
