@@ -2,16 +2,15 @@
   "hosting": {
     "site": "unometry-indexing-bridge",
     "public": ".",
-    "ignore": [
-      ".github",
-      ".gitignore",
-      "firebase.json",
-      "firebaserc.json",
-      "**/node_modules/**"
-    ],
     "headers": [
       {
         "source": "/**",
+        "headers": [
+          { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate, max-age=0" }
+        ]
+      },
+      {
+        "source": "/robots.txt",
         "headers": [
           { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate, max-age=0" }
         ]

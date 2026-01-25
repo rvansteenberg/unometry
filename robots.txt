@@ -13,7 +13,7 @@ Allow: /
 # Handshake: Tell all bots where the sitemap is
 Sitemap: https://unometry.com/sitemap.xml
 
-# Version: [20260123::10:00]
+# Version: [20260125::12:00]
 # Cache - Cage Check
 # GSC - Google Search Console
 # GCS - Google Cloud Storage
