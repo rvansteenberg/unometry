@@ -1,7 +1,8 @@
 # IDENTIFIER: main.yml (Run Work Flow)
-# VERSION:    [20260125::04:10] 
-# STATUS:     [A] Architect's Master Workflow - Cloudflare Purge Integrated
+# VERSION:    [20260125::04:05] 
+# STATUS:     [A] Architect's Master Workflow - Direct Cache Purge Fix
 # ============================================================
+# Note: Integrated direct Cloudflare API call to prevent "Unable to resolve action" errors.
 
 name: Run Work Flow
 on:
@@ -19,6 +20,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # STEP 1: Deploy to GitHub Pages
   deploy:
     runs-on: ubuntu-latest
     environment:
@@ -45,6 +47,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
+  # STEP 2: Indexing and Cache Invalidation
   google-index-and-purge:
     needs: deploy
     runs-on: ubuntu-latest
@@ -57,13 +60,13 @@ jobs:
           siteUrl: 'https://unometry.com/'
           gcpServiceAccountKey: ${{ secrets.GCP_SA_KEY }}
 
-      # CLOUDFLARE PURGE: This kills the "Cache Cage" globally
+      # CLOUDFLARE PURGE: Direct API call to clear the "Cache Cage"
       - name: Purge Cloudflare Cache
-        uses: nathanvaughn/cloudflare-purge-action@v3
-        with:
-          cloudflare_zone_id: ${{ secrets.CLOUDFLARE_ZONE_ID }}
-          cloudflare_auth_key: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          purge_everything: true
+        run: |
+          curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
+          -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+          -H "Content-Type: application/json" \
+          --data '{"purge_everything":true}'
 
       - name: Final Handshake
         run: |
