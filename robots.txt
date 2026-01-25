@@ -20,6 +20,7 @@ Sitemap: https://unometry.com/sitemap.xml
 # GGC - Google Global Cache (GGC)
 # GSP - Google Safety Proxy
 # other hops between GSP and GAI Gemini AI
+# CDN - Content Delivery Network
 # /
 # robots.txt
 # sitemap.xml
