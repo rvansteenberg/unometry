@@ -15,6 +15,8 @@ jobs:
 
       - name: Deploy to Firebase
         run: |
+          # This creates the key file from your GitHub Secret
           echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_UNOMETRY_INDEXING_BRIDGE }}' > service-account.json
+          # This tells the tool to use that key for authentication
           export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/service-account.json
           firebase deploy --only hosting --project unometry-indexing-bridge --non-interactive
