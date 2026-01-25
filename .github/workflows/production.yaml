@@ -24,7 +24,7 @@ jobs:
           
           # 3. Execute the deploy
           # We use --only hosting:unometry-indexing-bridge to be explicit
-          firebase deploy --only hosting:unometry-indexing-bridge --project unometry-indexing-bridge --non-interactive
+          firebase deploy --only hosting:unometry-indexing-bridge --project unometry-indexing-bridge --non-interactive --force
           
           # 4. Cleanup the key file immediately for security
           rm service-account.json
