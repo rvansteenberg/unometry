@@ -3,8 +3,10 @@
     "site": "unometry-indexing-bridge",
     "public": ".",
     "ignore": [
+      ".github",
+      ".gitignore",
       "firebase.json",
-      "**/.*",
+      "firebaserc.json",
       "**/node_modules/**"
     ],
     "headers": [

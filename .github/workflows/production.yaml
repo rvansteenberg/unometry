@@ -1,4 +1,5 @@
 name: Production Master Workflow
+
 on:
   push:
     branches: ["main"]
@@ -7,16 +8,23 @@ jobs:
   firebase-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout Repo
         uses: actions/checkout@v4
 
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
-      - name: Deploy to Firebase
+      - name: Deploy to Firebase Hosting
         run: |
-          # This creates the key file from your GitHub Secret
+          # 1. Create the temporary key file from your GitHub Secret
           echo '${{ secrets.GCP_SA_KEY }}' > service-account.json
-          # This tells the tool to use that key for authentication
+          
+          # 2. Set the environment variable so Firebase knows which key to use
           export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/service-account.json
-          firebase deploy --only hosting --project unometry-indexing-bridge --non-interactive
+          
+          # 3. Execute the deploy
+          # We use --only hosting:unometry-indexing-bridge to be explicit
+          firebase deploy --only hosting:unometry-indexing-bridge --project unometry-indexing-bridge --non-interactive
+          
+          # 4. Cleanup the key file immediately for security
+          rm service-account.json
