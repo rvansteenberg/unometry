@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "unometry-indexing-bridge",
     "public": ".",
     "ignore": [
       "firebase.json",
