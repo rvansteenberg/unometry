@@ -1,9 +1,7 @@
-# ============================================================
 # IDENTIFIER: main.yml (Run Work Flow)
-# VERSION:    [20260124::05:20] 
-# STATUS:     [A] Architect's Master Workflow
+# VERSION:    [20260125::04:10] 
+# STATUS:     [A] Architect's Master Workflow - Cloudflare Purge Integrated
 # ============================================================
-# Note: Fixed sequence to Deploy -> Index and added Cache Kill.
 
 name: Run Work Flow
 on:
@@ -21,7 +19,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # STEP 1: Physically move the files to the web first
   deploy:
     runs-on: ubuntu-latest
     environment:
@@ -30,28 +27,45 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      - name: Upload
+
+      - name: Verify Manifests
+        run: |
+          ls -la llms.txt robots.txt sitemap.xml
+          echo "Verification Complete: Core files present."
+
+      - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: '.'
-      - name: Deploy
+
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
 
-  # STEP 2: Only tell Google to index AFTER the deploy is successful
-  google-index:
+  google-index-and-purge:
     needs: deploy
     runs-on: ubuntu-latest
     steps:
       - name: Indexing API
         uses: robingenz/action-google-indexing@v1.0.0
         env:
-          # This kills the buggy cache service for this job
           ACTIONS_CACHE_SKIP: 'true' 
-          # This ensures the key is readable by the runner
-          GCP_SERVICE_ACCOUNT_KEY: ${{ secrets.GCP_SA_KEY }}
         with:
           siteUrl: 'https://unometry.com/'
           gcpServiceAccountKey: ${{ secrets.GCP_SA_KEY }}
+
+      # CLOUDFLARE PURGE: This kills the "Cache Cage" globally
+      - name: Purge Cloudflare Cache
+        uses: nathanvaughn/cloudflare-purge-action@v3
+        with:
+          cloudflare_zone_id: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+          cloudflare_auth_key: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          purge_everything: true
+
+      - name: Final Handshake
+        run: |
+          echo "Dynacom: Cache cleared. Forcing fresh fetch..."
+          curl -I -X GET "https://unometry.com/llms.txt" -H "Cache-Control: no-cache"
